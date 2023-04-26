@@ -1,10 +1,13 @@
-const api_key = 'RGAPI-61d34ab1-408f-41e5-99a9-ba01da15fcea';
+import {env} from '$env/dynamic/public'
+
+export const API_KEY = env['PUBLIC_API_KEY']
+
 export async function search(name: string | null) {
 	let data: SummonerData = new SummonerData();
 	console.log("name", name)
 	if (name != null) {
 		const res = await fetch(
-			`https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${name}?api_key=${api_key}`
+			`https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${name}?api_key=${API_KEY}`
 		);
 		data = await res.json();
 	}
@@ -14,7 +17,7 @@ export async function search(name: string | null) {
 export async function match_history(puuid: string, count: number) {
 	console.log(puuid, count);
 	const res = await fetch(
-		`https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?start=${count}&count=${20}&api_key=${api_key}`
+		`https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?start=${count}&count=${20}&api_key=${API_KEY}`
 	);
 	const data: string[] = await res.json();
 	console.log(data);
@@ -22,7 +25,7 @@ export async function match_history(puuid: string, count: number) {
 }
 export async function match_details(match_id: string) {
 	const res = await fetch(
-		`https://americas.api.riotgames.com/lol/match/v5/matches/${match_id}?api_key=${api_key}`
+		`https://americas.api.riotgames.com/lol/match/v5/matches/${match_id}?api_key=${API_KEY}`
 	);
 	const data = await res.json();
 	console.log(data);
@@ -30,7 +33,7 @@ export async function match_details(match_id: string) {
 }
 export async function league_entires(accountId: string) {
 	const res = await fetch(
-		`https://na1.api.riotgames.com/lol/league/v4/entries/by-summoner/${accountId}?api_key=${api_key}`
+		`https://na1.api.riotgames.com/lol/league/v4/entries/by-summoner/${accountId}?api_key=${API_KEY}`
 	);
 	const data = await res.json();
 	return data;
