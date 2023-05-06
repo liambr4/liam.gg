@@ -12,7 +12,7 @@
 				<div class={`col-span-1 p-1 ${participant.win ? 'bg-green-300' : 'bg-red-300'}`}>
 					<img
 						alt="idk"
-						src={`http://ddragon.leagueoflegends.com/cdn/12.23.1/img/champion/${participant.championName}.png`}
+						src={`http://ddragon.leagueoflegends.com/cdn/13.9.1/img/champion/${participant.championName}.png`}
 					/>
 					<p>
 						{participant.kills +
@@ -24,29 +24,71 @@
 							((participant.kills + participant.assists) / participant.deaths).toFixed(1) +
 							'KDA)'}
 					</p>
-					<p>Damage to Champions: {participant.totalDamageDealtToChampions}</p>
+					<p>Damage to Champions: {participant.totalDamageDealtToChampions.toLocaleString()}</p>
 					<p>{QueueType[match.info.queueId]}</p>
 				</div>
 			{/if}
 		{/each}
 		<div class="col-span-3">
-			<div class="grid grid-rows-5 grid-flow-col gap-2">
-				{#each match.info.participants as participant}
-					<div
-						class={`p-1 ${participant.win ? 'bg-green-300' : 'bg-red-300'} ${
-							participant.puuid == puuid && 'border-2 border-blue-500'
-						}`}
-					>
-						<img
-							class="float-left pr-1 pb-0"
-							alt="idk"
-							src={`http://ddragon.leagueoflegends.com/cdn/12.23.1/img/champion/${participant.championName}.png`}
-							width="50"
-							height="50"
-						/>
-						<a href={`/?name=${participant.summonerName}`}>{participant.summonerName}</a>
+			<div class="grid grid-cols-2">
+				<div>
+					<div class="flex flex-col gap-1">
+						{#each match.info.participants as participant, index}
+							{#if index < 5}
+								<div
+									class={`p-1 ${participant.win ? 'bg-green-300' : 'bg-red-300'} ${
+										participant.puuid == puuid
+											? 'border-2 border-blue-500'
+											: participant.win
+											? 'border-2 border-green-300'
+											: 'border-2 border-red-300'
+									}`}
+								>
+									<img
+										class="float-left pr-1 pb-0"
+										alt="idk"
+										src={`http://ddragon.leagueoflegends.com/cdn/13.9.1/img/champion/${participant.championName}.png`}
+										width="50"
+										height="50"
+									/>
+									<a
+										class={participant.puuid == puuid ? 'font-bold' : 'font-normal'}
+										href={`/?name=${participant.summonerName}`}>{participant.summonerName}</a
+									>
+								</div>
+							{/if}
+						{/each}
 					</div>
-				{/each}
+				</div>
+				<div>
+					<div class="flex flex-col gap-1">
+						{#each match.info.participants as participant, index}
+							{#if index > 4}
+								<div
+									class={`p-1 ${participant.win ? 'bg-green-300' : 'bg-red-300'} ${
+										participant.puuid == puuid
+											? 'border-2 border-blue-500'
+											: participant.win
+											? 'border-2 border-green-300'
+											: 'border-2 border-red-300'
+									}`}
+								>
+									<img
+										class="float-left pr-1 pb-0"
+										alt="idk"
+										src={`http://ddragon.leagueoflegends.com/cdn/13.9.1/img/champion/${participant.championName}.png`}
+										width="50"
+										height="50"
+									/>
+									<a
+										class={participant.puuid == puuid ? 'font-bold' : 'font-normal'}
+										href={`/?name=${participant.summonerName}`}>{participant.summonerName}</a
+									>
+								</div>
+							{/if}
+						{/each}
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

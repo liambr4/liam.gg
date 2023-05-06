@@ -3,7 +3,6 @@
 	import { match_history } from './search';
 	export let count: number;
 	export let id = '';
-	console.log( count, id);
 	let matches_promise: Promise<string[]>;
 	if (id.length > 1 && count != null) {
 		matches_promise = match_history(id, count);
